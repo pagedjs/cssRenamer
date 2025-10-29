@@ -1,0 +1,21 @@
+{
+  "name": "csstreetocssom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.js --bundle --outfile=public/js/built.js --minify",
+    "dev": "esbuild src/index.js --bundle --outfile=public/js/built.js --watch --sourcemap",
+    "serve": "esbuild src/index.js --bundle --outdir=public/js --servedir=public --serve=8000 --sourcemap"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "css-tree": "^3.1.0"
+  }
+}
