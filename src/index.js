@@ -1,54 +1,40 @@
 import * as csstree from "css-tree";
 import { format } from "@projectwallace/format-css";
-
-const css = `
-@page {
-  margin: 1cm;
-  size: A4;
-}
-
-@page introduction {
-  color:red;
-}
-@page introduction:right {
-@footnotes {
-  display: span;
-}
-  color:red;
-}
-@page:left {
-  color:red;
-}
-
-body {
-  chaussette: socks;
-}`;
-
+import loadAllStylesheets from "./utils/loadStylesheets";
+import { pagedjsRenamer } from "./renamer/dictionnary";
+import "@andypf/json-viewer";
+import { getCSSOMStringFromCSS } from "./cssom/cssom";
 renamer();
 
-function renamer() {
-  const ast = csstree.parse(css, { positions: true });
+async function renamer() {
+  let stylesheets = await loadAllStylesheets();
+  const renamedAsts = [];
+  stylesheets.forEach((stylesheet) => {
+    let section = document.createElement("section");
+    section.classList.add("styles");
+    section.insertAdjacentHTML("beforeend", `<h2>${stylesheet.filename}</h2>`);
 
-  // renameAtRule({ name: "page", replacement: "paged-page", ast });
-  // renameAtRule({ name: "footnotes", ast });
-  // renameProperty({
-  //   property: "chaussette",
-  //   replacement: "--paged-socks",
-  //   ast,
-  // });
-  //
-  //
-  //
-  renameAtRule({ name: "page", replacement: "paged-page", ast });
-  renameProperty({
-    property: "chaussette",
-    replacement: "--paged-chaussette",
-    ast,
-  });
-  // renameValue({ value: "socks", ast });
+    section.insertAdjacentHTML(
+      "beforeend",
+      `<div><h3>source</h3><pre>${stylesheet.rules}</pre></div>`,
+    );
+    section.insertAdjacentHTML(
+      "beforeend",
+      `<div><h3>transformed</h3><pre>${format(csstree.generate(pagedjsRenamer(stylesheet.ast)), { tab_size: 2 })}</pre></div>`,
+    );
+    section.insertAdjacentHTML(
+      "beforeend",
+      `<div><h3>CSSOM from source</h3><pre>${format(stylesheet.cssom, { tab_size: 2 })}</pre></div>`,
+    );
+    section.insertAdjacentHTML(
+      "beforeend",
+      `<div><h3>CSSOM from transformed CSS</h3><pre>${format(getCSSOMStringFromCSS(csstree.generate(pagedjsRenamer(stylesheet.ast))), { tab_size: 2 })}</pre></div>`,
+    );
 
-  document.querySelector("pre").textContent = format(csstree.generate(ast), {
-    tab_size: 2,
+    document.body.insertAdjacentElement("beforeend", section);
+
+    // renamedAsts.push(pagedjsRenamer(stylesheet.ast));
+    // renamedAsts.forEach(() => {});
   });
 }
 
@@ -132,9 +118,17 @@ export function renameAtRule({ name, replacement, ast }) {
 
   for (const { node, item, list } of replacements) {
     if (node.prelude) {
+      console.log(node.prelude);
       prelude.name = csstree.generate(node.prelude).split(":")[0];
-      prelude.pseudo = csstree.generate(node.prelude).split(":")[1];
+      prelude.pseudo = csstree
+        .generate(node.prelude)
+        .replace(/\(/g, "_")
+        .replace(/\)/g, "")
+        .split(":")[1];
+      //remove function
     }
+
+    console.log(prelude);
 
     const newRule = {
       type: "Rule",
