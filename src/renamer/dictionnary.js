@@ -8,7 +8,12 @@ let properties = [
   ["marks", "--paged-marks"],
 ];
 
-let atRules = [["page", "paged-page"]];
+let atRules = [
+  ["page", "paged-page"],
+  ["footnotes", ".paged-footnotes"],
+];
+
+let values = [["bottom", "var(--paged-bottom)", "float"]];
 
 export function pagedjsRenamer(ast) {
   for (item of properties) {
@@ -19,26 +24,14 @@ export function pagedjsRenamer(ast) {
     renameAtRule({ name: item[0], replacement: item[1], ast });
   }
 
-  //   renameProperty({
-  //   property: "chaussette",
-  //   replacement: "--paged-chaussette",
-  //   ast,
-  // });
-  // renameValue({ value: "socks", replacement: "var(--paged-socks)", ast });
-  //
-  // //
-  // renameProperty({
-  //   property: "bleed",
-  //   replacement: "--bleed",
-  //   ast,
-  // });
-  //
-  // //marks
-  // renameProperty({
-  //   property: "marks",
-  //   replacement: "--marks",
-  //   ast,
-  // });
+  for (item of values) {
+    renameValue({
+      value: item[0],
+      replacement: item[1],
+      property: item[2],
+      ast,
+    });
+  }
 
   return ast;
 }

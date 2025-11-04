@@ -31,7 +31,8 @@
 
 @page introduction:right {
   @footnotes {
-    display: span;
+    display: block;
+    float: bottom;
   }
   color: red;
 }
