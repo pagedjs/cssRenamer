@@ -114,9 +114,8 @@ export function renameAtRule({ name, replacement, ast }) {
     },
   });
 
-  let prelude = {};
-
   for (const { node, item, list } of replacements) {
+    let prelude = {};
     if (node.prelude) {
       console.log(node.prelude);
       prelude.name = csstree.generate(node.prelude).split(":")[0];
@@ -127,8 +126,6 @@ export function renameAtRule({ name, replacement, ast }) {
         .split(":")[1];
       //remove function
     }
-
-    console.log(prelude);
 
     const newRule = {
       type: "Rule",

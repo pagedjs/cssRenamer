@@ -1,45 +1,45 @@
+/*page rules*/
+
 @page what:nth(29) {
   background: green;
 }
-/* /* @page rules */
-/**/
-/* @page { */
-/*   margin: 1cm; */
-/*   size: A4; */
-/*   marks: crop cross; */
-/*   bleed: 5mm; */
-/*   background: green; */
-/*   somethingforbidden: blux; */
-/* } */
-/**/
-/* @page intro:first { */
-/*   background: green; */
-/* } */
-/**/
-/* @page intro:blank { */
-/*   background: green; */
-/* } */
-/**/
-/* @page introduction { */
-/*   color: red; */
-/* } */
-/**/
-/* @page :nth(13) { */
-/*   content: page14; */
-/* } */
-/**/
-/**/
-/* @page introduction:right { */
-/*   @footnotes { */
-/*     display: span; */
-/*   } */
-/*   color: red; */
-/* } */
-/**/
-/* @page:left { */
-/*   color: red; */
-/* } */
-/**/
-/* body { */
-/*   chaussette: socks; */
-/* } */
+
+@page {
+  margin: 1cm;
+  size: A4;
+  marks: crop cross;
+  bleed: 5mm;
+  background: green;
+  somethingforbidden: blux;
+}
+
+@page intro:first {
+  background: green;
+}
+
+@page intro:blank {
+  background: green;
+}
+
+@page introduction {
+  color: red;
+}
+
+@page :nth(13) {
+  content: page14;
+}
+
+@page introduction:right {
+  @footnotes {
+    display: span;
+  }
+  color: red;
+}
+
+@page:left {
+  color: red;
+}
+
+body {
+  chaussette: socks;
+}
