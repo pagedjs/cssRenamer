@@ -20,11 +20,8 @@ const css = `
   color:red;
 }
 
-
-
-
 body {
-chaussette: socks;
+  chaussette: socks;
 }`;
 
 renamer();
@@ -43,7 +40,11 @@ function renamer() {
   //
   //
   renameAtRule({ name: "page", replacement: "paged-page", ast });
-  renameProperty({ property: "property", ast });
+  renameProperty({
+    property: "chaussette",
+    replacement: "--paged-chaussette",
+    ast,
+  });
   // renameValue({ value: "socks", ast });
 
   document.querySelector("pre").textContent = format(csstree.generate(ast), {
@@ -84,30 +85,30 @@ export function renameValue({ value, property, replacement, ast }) {
   return replacements;
 }
 
-export function renameProperty({ propertyName, replacement, valueName, ast }) {
+export function renameProperty({ property, replacement, ast }) {
   const replacements = [];
 
   csstree.walk(ast, {
     visit: "Declaration",
     enter: (node, item, list) => {
       // Match property name (case-insensitive)
-      if (node.property === propertyName) {
+      if (node.property === property) {
         // Optionally, also match specific value
         const valueString = csstree.generate(node.value);
-        if (!valueName || valueString === valueName) {
-          replacements.push({ node, item, list, valueString });
-        }
+        replacements.push({ node, item, list, replacement });
       }
     },
   });
 
-  for (const { node, item, list, valueString } of replacements) {
+  console.log(replacements);
+
+  for (const { node, item, list, replacement } of replacements) {
     const newDeclaration = {
       type: "Declaration",
       loc: node.loc,
       important: node.important,
-      property: valueString,
-      value: csstree.parse(newValue, { context: "value" }),
+      property: replacement,
+      value: node.value,
     };
 
     // Replace the old declaration
