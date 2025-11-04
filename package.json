@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@projectwallace/format-css": "^2.1.1",
     "css-tree": "^3.1.0"
   }
 }
