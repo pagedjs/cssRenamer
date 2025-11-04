@@ -1,0 +1,14 @@
+/*page rules*/
+
+@page what:nth(29) {
+  background: green;
+}
+
+@page {
+  margin: 1cm;
+  size: A4;
+  marks: crop cross;
+  bleed: 5mm;
+  background: green;
+  somethingforbidden: blux;
+}

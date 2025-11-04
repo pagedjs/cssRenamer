@@ -31,15 +31,14 @@ async function renamer() {
       "beforeend",
       `<div><h3>source</h3><pre>${stylesheet.rules}</pre></div>`,
     );
-
     section.insertAdjacentHTML(
       "beforeend",
-      `<div><h3>transformed</h3><pre>${format(csstree.generate(pagedjsRenamer(stylesheet.ast)), { tab_size: 2 })}</pre></div>`,
+      `<div><h3>CSSOM from source</h3><pre>${format(stylesheet.cssom, { tab_size: 2 })}</pre></div>`,
     );
 
     section.insertAdjacentHTML(
       "beforeend",
-      `<div><h3>CSSOM from source</h3><pre>${format(stylesheet.cssom, { tab_size: 2 })}</pre></div>`,
+      `<div><h3>transformed</h3><pre>${format(csstree.generate(pagedjsRenamer(stylesheet.ast)), { tab_size: 2 })}</pre></div>`,
     );
 
     section.insertAdjacentHTML(

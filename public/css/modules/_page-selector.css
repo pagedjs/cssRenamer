@@ -1,0 +1,31 @@
+/* @page selectors */
+
+@page intro {
+  color: red;
+}
+
+@page intro:first {
+  background: green;
+}
+
+@page intro:blank {
+  background: green;
+}
+
+@page :nth(13) {
+  content: page14;
+}
+
+/*footnotes*/
+
+@page {
+  @footnotes {
+    display: block;
+    float: bottom;
+  }
+  color: red;
+}
+
+@page :left {
+  color: red;
+}
