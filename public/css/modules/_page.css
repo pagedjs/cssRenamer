@@ -1,6 +1,6 @@
 /*page rules*/
 
-@page what:nth(29) {
+@page :nth(29) {
   background: green;
 }
 

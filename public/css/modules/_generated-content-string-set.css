@@ -1,0 +1,64 @@
+/* String set for reusing titles */
+
+.title-lvl-1 {
+  string-set: identifier content(text);
+}
+
+.title-lvl-2 {
+  /* // keep the content of the before pseudo element */
+  string-set: identifier content(before);
+}
+
+.title-lvl-3 {
+  /* // keep the content of the after pseudo element */
+  string-set: identifier content(after);
+}
+
+.title-lvl-3 {
+  /* // keep the content of an attribute pseudo element */
+  string-set: identifier attr(attribute);
+}
+
+.title-lvl-4 {
+  /* // keep the first-letter of the content  element */
+  string-set: identifier content(first-letter);
+}
+
+.title-lvl-5 {
+  /* // keep the value of a counter */
+  string-set: identifier counter(counter-id);
+}
+
+.title-lvl-6 {
+  /* // keep the maximum number of a counter */
+  string-set: identifier counters(counter-ids);
+}
+
+/* first */
+/*     The value of the first assignment on the page is used. If there is no assignment on the page, the entry value is used. first is the default value.  */
+
+/* start */
+/*     If the element is the first element on the page, the value of the first assignment is used. Otherwise the entry value is used. The entry value may be empty if the element hasn’t yet appeared.  */
+/* last */
+/*     The exit value of the named string is used.  */
+/* first-except */
+/*     This is identical to first, except that the empty string is used on the page where the value is assigned.  */
+
+@page {
+  @top-center {
+    /* // start: first on the page unless it’s the first page */
+    content: string(identifer, start);
+  }
+  @top-right {
+    /* // first of the page */
+    content: string(identifer, first);
+  }
+  @top-left {
+    /* // first of the page */
+    content: string(identifer, first-except);
+  }
+  @bottom-right {
+    /* // last of the page */
+    content: string(identifer, last);
+  }
+}

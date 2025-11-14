@@ -1,0 +1,10 @@
+/* https://www.w3.org/TR/css-content-3/#cross-references */
+
+/* //target counter: to find the location of a link */
+.innerlink-a::after {
+  content: target-counter(attr(href, url), page);
+}
+
+/* a::after { content: target-counter(attr(href url), page) } */
+
+/* .bodymatter a::after { content: leader('.') target-counter(attr(href url), page, decimal) } */

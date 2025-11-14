@@ -1,0 +1,16 @@
+/* https://www.w3.org/TR/css-break-3/#break-decoration */
+
+/* clone */
+/*     Each box fragment is independently wrapped with the border, padding, and margin. The border-radius and border-image and box-shadow, if any, are applied to each fragment independently. The background is drawn independently in each fragment of the element. A no-repeat background image will thus be rendered once in each fragment of the element. */
+/**/
+/*     Note: Cloned margins are truncated on block-level boxes. */
+/* slice */
+/**/
+/*     The effect is as though the element were rendered with no breaks present, and then sliced by the breaks afterward: no border and no padding are inserted at a break; no box-shadow is drawn at a broken edge; and backgrounds, border-radius, and the border-image are applied to the geometry of the whole box as if it were unbroken. */
+
+.something-slice {
+  box-decoration-break: slice;
+}
+.something-break {
+  box-decoration-break: clone;
+}

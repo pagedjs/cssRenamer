@@ -1,0 +1,8 @@
+@page {
+  @bottom-right-corner {
+    content: "ouch";
+  }
+  @top-center {
+    content: "dang";
+  }
+}

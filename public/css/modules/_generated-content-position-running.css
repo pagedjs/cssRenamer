@@ -1,0 +1,35 @@
+/* String set for reusing titles */
+/* warning: there are a lot of function, a renaming might not be enough, we should definitely check for a better setup*/
+
+.title-lvl-1 {
+  /* // move only the first element of the page */
+  position: running(identifier);
+}
+
+/* // this will be a bit mnore complex because we also need to change value as content is something a browser can work with. */
+/* so when you find element(something), you need to move it to either move it to a variable. So if you find an unknown value you want to provide a better set of info */
+
+/* first */
+/*     The value of the first assignment on the page is used. If there is no assignment on the page, the entry value is used. first is the default value.  */
+
+/* start */
+/*     If the element is the first element on the page, the value of the first assignment is used. Otherwise the entry value is used. The entry value may be empty if the element hasn’t yet appeared.  */
+/* last */
+/*     The exit value of the named string is used.  */
+/* first-except */
+/*     This is identical to first, except that the empty string is used on the page where the value is assigned.  */
+
+@page {
+  @top-center {
+    content: element(something, first);
+  }
+  @top-left {
+    content: element(something, start);
+  }
+  @top-right {
+    content: element(something, last);
+  }
+  @bottom-center {
+    content: element(something, first-except);
+  }
+}

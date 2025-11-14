@@ -1,0 +1,27 @@
+h2 {
+  break-after: avoid;
+}
+
+section {
+  break-before: page;
+}
+
+.some {
+  break-inside: avoid-column;
+}
+
+section {
+  break-inside: avoid;
+}
+
+body {
+  orphans: 4;
+  widows: 4;
+}
+
+.something {
+  box-decoration-break: slice;
+}
+.something-else {
+  box-decoration-break: clone;
+}
