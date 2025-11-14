@@ -23,13 +23,14 @@ async function renamer() {
   const renamedAsts = [];
 
   stylesheets.forEach((stylesheet) => {
+    console.log(stylesheet);
     let section = document.createElement("section");
     section.classList.add("styles");
     section.insertAdjacentHTML("beforeend", `<h2>${stylesheet.filename}</h2>`);
 
     section.insertAdjacentHTML(
       "beforeend",
-      `<div><h3>source</h3><pre>${stylesheet.rules}</pre></div>`,
+      `<div><h3>source</h3><pre>${format(stylesheet.rules, { tab_size: 2 })}</pre></div>`,
     );
     section.insertAdjacentHTML(
       "beforeend",
@@ -38,7 +39,8 @@ async function renamer() {
 
     section.insertAdjacentHTML(
       "beforeend",
-      `<div><h3>transformed</h3><pre>${format(csstree.generate(pagedjsRenamer(stylesheet.ast)), { tab_size: 2 })}</pre></div>`,
+      `<div><h3>transformed</h3>
+<pre>${format(csstree.generate(pagedjsRenamer(stylesheet.ast)), { tab_size: 2 })}</pre></div>`,
     );
 
     section.insertAdjacentHTML(

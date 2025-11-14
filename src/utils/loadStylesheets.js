@@ -24,7 +24,7 @@ export async function getCSStext(link, seen = new Set()) {
 
     csstree.walk(ast, {
       visit: "Atrule",
-      enter(node) {
+      enter(node, list, item) {
         if (node.name === "import" && node.prelude) {
           // Extract the import URL from the prelude
           const importURL = csstree
@@ -38,6 +38,8 @@ export async function getCSStext(link, seen = new Set()) {
 
     // Resolve and fetch all imports recursively
     let resolvedImports = "";
+
+    // imports
     for (const i of imports) {
       // Resolve relative to current stylesheet
       const resolved = new URL(i, link).href;
@@ -50,7 +52,7 @@ export async function getCSStext(link, seen = new Set()) {
       csstree.fromPlainObject(
         JSON.parse(
           JSON.stringify(ast, (key, value) =>
-            key === "name" && value === "import" ? undefined : value,
+            key === "name" && value === "import" ? "paged-imported" : value,
           ),
         ),
       ),
