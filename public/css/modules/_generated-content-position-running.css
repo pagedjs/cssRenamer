@@ -33,3 +33,12 @@
     content: element(something, first-except);
   }
 }
+
+/* // conversion may need to be the following: */
+/* .paged-page { */
+/*   .top-center { */
+/*     content: var(--element-something_first); */
+/*   } */
+/* } */
+/* in js, check for the split("_").last to find the first */
+/* identifier: --paged-element- xxx  _type */

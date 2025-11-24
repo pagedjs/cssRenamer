@@ -1,53 +1,56 @@
-import * as csstree from "css-tree";
-import { format } from "@projectwallace/format-css";
+import { CssTransformer } from "./modules/CssTransformer.js";
 import loadAllStylesheets from "./utils/loadStylesheets";
-import { pagedjsRenamer } from "./modules/dictionnary";
-import "@andypf/json-viewer";
-import { getCSSOMStringFromCSS } from "./cssom/cssom";
+import { format } from "@projectwallace/format-css";
+import * as csstree from "css-tree";
+import { getCSSOMStringFromCSS } from "./cssom/cssom.js";
 
-renamer();
+// Make sure all rule files are loaded somewhere in your project
+import "./modules/rules/index.js";
 
-/**
- * Loads all stylesheets, renames their CSS AST using `pagedjsRenamer`,
- * and renders the original and transformed CSS, along with their CSSOM representations,
- * into the document as formatted sections.
- *
- * This is the main entry point that triggers stylesheet transformation and display.
- *
- * @async
- * @function renamer
- * @returns {Promise<void>} A promise that resolves when all stylesheets have been processed and displayed.
- */
+export function pagedjsRenamer(ast) {
+  return CssTransformer.apply(ast);
+}
+
 async function renamer() {
-  let stylesheets = await loadAllStylesheets();
-  const renamedAsts = [];
+  const stylesheets = await loadAllStylesheets();
+
+  console.log(stylesheets);
 
   stylesheets.forEach((stylesheet) => {
-    console.log(stylesheet);
-    let section = document.createElement("section");
+    const section = document.createElement("section");
     section.classList.add("styles");
-    section.insertAdjacentHTML("beforeend", `<h2>${stylesheet.filename}</h2>`);
 
-    section.insertAdjacentHTML(
-      "beforeend",
-      `<div><h3>source</h3><pre>${format(stylesheet.rules, { tab_size: 2 })}</pre></div>`,
-    );
-    section.insertAdjacentHTML(
-      "beforeend",
-      `<div><h3>CSSOM from source</h3><pre>${format(stylesheet.cssom, { tab_size: 2 })}</pre></div>`,
-    );
+    const transformedAst = pagedjsRenamer(stylesheet.ast);
+    const transformedCSS = csstree.generate(transformedAst);
+    const transformedCSSOM = getCSSOMStringFromCSS(transformedCSS);
 
-    section.insertAdjacentHTML(
-      "beforeend",
-      `<div><h3>transformed</h3>
-<pre>${format(csstree.generate(pagedjsRenamer(stylesheet.ast)), { tab_size: 2 })}</pre></div>`,
-    );
+    console.log(stylesheet.ast);
+    section.innerHTML = `
+      <h2>${stylesheet.filename}</h2>
 
-    section.insertAdjacentHTML(
-      "beforeend",
-      `<div><h3>CSSOM from transformed CSS</h3><pre>${format(getCSSOMStringFromCSS(csstree.generate(pagedjsRenamer(stylesheet.ast))), { tab_size: 2 })}</pre></div>`,
-    );
+      <div>
+        <h3>Source</h3>
+        <pre>${format(stylesheet.rules || "", { tab_size: 2 })}</pre>
+      </div>
 
-    document.body.insertAdjacentElement("beforeend", section);
+      <div>
+        <h3>CSSOM from source</h3>
+        <pre>${format(stylesheet.cssom || "", { tab_size: 2 })}</pre>
+      </div>
+
+      <div>
+        <h3>Transformed</h3>
+        <pre>${format(transformedCSS, { tab_size: 2 })}</pre>
+      </div>
+
+      <div>
+        <h3>CSSOM from transformed CSS</h3>
+        <pre>${format(transformedCSSOM, { tab_size: 2 })}</pre>
+      </div>
+    `;
+
+    document.body.appendChild(section);
   });
 }
+
+renamer();

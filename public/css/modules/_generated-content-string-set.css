@@ -62,3 +62,12 @@
     content: string(identifer, last);
   }
 }
+
+/* // conversion may need to be the following: */
+/* .paged-page { */
+/*   .top-center { */
+/*     content: var(--string-identfier_first-except); */
+/*   } */
+/* } */
+/* in js, check for the split("_").last to find the first */
+/* identifier: --paged-element- xxx  _type */

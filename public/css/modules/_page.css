@@ -10,5 +10,16 @@
   marks: crop cross;
   bleed: 5mm;
   background: green;
-  somethingforbidden: blux;
 }
+
+/* renaming should look like this: */
+/* .paged-page { */
+/*   --paged-bleed-top: 5mm; */
+/*   --paged-bleed-right: 5mm; */
+/*   --paged-bleed-bottom: 5mm; */
+/*   --paged-bleed-left: 5mm; */
+/*   --paged-size: a4; */
+/*   --paged-marks: crop cross; */
+/*   --paged-margin: 1ch; */
+/*   background: stay the same; */
+/* } */
